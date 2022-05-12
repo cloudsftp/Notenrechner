@@ -1,0 +1,3 @@
+# Notenrechner
+
+Simpler Notenrechner.
