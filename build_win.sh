@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAME="NotenrechnerWindows-x86"
+NAME="NotenrechnerWindows-x86_64"
 
 cat > "${NAME}.rc" << EOL
 id ICON "./Img/icon.ico"

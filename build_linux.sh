@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go build -v -o NotenrechnerLinux-x86 src/Notenrechner.go
+go build -v -o NotenrechnerLinux-x86_64 src/Notenrechner.go
