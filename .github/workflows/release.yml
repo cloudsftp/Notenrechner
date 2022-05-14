@@ -2,7 +2,7 @@ on:
   push:
     tags:
       - 'v*'
-    branch:
+    branches:
       - 'feature/build'
 
 jobs:
