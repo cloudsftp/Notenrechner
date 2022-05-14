@@ -41,5 +41,8 @@ jobs:
         run: ./build_win.sh
           
       - name: Release
-        uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "Notenrechner*"
+          token: ${{ secrets.GITHUB_TOKEN }}
