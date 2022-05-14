@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 
 	g "github.com/AllenDang/giu"
 )
@@ -14,8 +15,8 @@ var (
 	gradeStr     string = "1.00"
 )
 
-func gradeFromPoints(points int, maxPoints int) float32 {
-	return 6 - 5*(float32(points)/float32(maxPoints))
+func gradeFromPoints(points float32, maxPoints float32) float32 {
+	return 6 - 5*(points/maxPoints)
 }
 
 func roundGrade(grade float32) float32 {
@@ -23,29 +24,39 @@ func roundGrade(grade float32) float32 {
 	return float32(math.Round(float64(grade*ratio))) / ratio
 }
 
-func pointsFromText(text string) int {
+func pointsFromText(text string) (float32, error) {
 	if text == "" {
-		return 0
+		return 0, nil
 	}
 
-	points, err := strconv.Atoi(text)
+	text = strings.Replace(text, ",", ".", 1)
+	points, err := strconv.ParseFloat(text, 32)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
 
-	return points
+	return float32(points), nil
 }
 
 func calculateGrade() {
-	points := pointsFromText(pointsStr)
-	maxPoints := pointsFromText(maxPointsStr)
+	points, err := pointsFromText(pointsStr)
+	if err != nil {
+		gradeStr = "Ungültige Eingabe"
+		return
+	}
+
+	maxPoints, err := pointsFromText(maxPointsStr)
+	if err != nil {
+		gradeStr = "Ungültige Eingabe"
+		return
+	}
 
 	preciseGrade := gradeFromPoints(points, maxPoints)
 	roundedGrade := roundGrade(preciseGrade)
 
 	gradeStr = fmt.Sprintf("%4.2f", roundedGrade)
 	if preciseGrade != roundedGrade {
-		gradeStr = fmt.Sprintf("%s (Genau: %4.2f)", gradeStr, preciseGrade)
+		gradeStr = fmt.Sprintf("%s (Genau: %5.3f)", gradeStr, preciseGrade)
 	}
 }
 
