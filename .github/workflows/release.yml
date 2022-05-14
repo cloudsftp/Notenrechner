@@ -30,7 +30,7 @@ jobs:
           go-version: 1.18
       
       - name: Install Dependencies
-        run: sudo apt install mingw-w64
+        run: sudo apt install mingw-w64 libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libglx-dev libgl1-mesa-dev libxxf86vm-dev
       
       - name: Build Linux
         run: go build -v -o Build/NotenrechnerLinux-x86 src/Notenrechner.go
