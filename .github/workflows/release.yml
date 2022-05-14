@@ -36,9 +36,15 @@ jobs:
       - name: Install Dependencies
         run: sudo apt install mingw-w64 libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libglx-dev libgl1-mesa-dev libxxf86vm-dev
       
+      - name: Build Linux
+        run: ./build_linux.sh
+      
+      - name: Build Windows
+        run: ./build_win.sh
           
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1
         with:
+          artifacts: "Notenrechner*"
           token: ${{ secrets.GITHUB_TOKEN }}
