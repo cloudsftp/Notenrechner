@@ -35,13 +35,13 @@ jobs:
         run: sudo apt install mingw-w64 libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libglx-dev libgl1-mesa-dev libxxf86vm-dev
       
       - name: Build Linux
-        run: go build -v -o Build/NotenrechnerLinux-x86 src/Notenrechner.go
+        run: ./build_linux.sh
       
       - name: Build Windows
-        run: GOOS=windows GOARCH=amd64 CGO_ENABLED=1 CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ HOST=x86_64-w64-mingw32 go build -ldflags "-s -w -H=windowsgui -extldflags=-static" -p 4 -v -o Build/NotenrechnerWindows-x86.exe src/Notenrechner.go
-      
+        run: ./build_win.sh
+          
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: Build/*
+          files: Notenrechner*
