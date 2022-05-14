@@ -1,3 +1,5 @@
+Name: Build
+
 on:
   push:
     tags:
@@ -6,8 +8,8 @@ on:
       - 'develop'
 
 jobs:
-  release:
-    name: Release
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
