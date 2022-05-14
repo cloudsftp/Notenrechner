@@ -66,6 +66,6 @@ func loop() {
 }
 
 func main() {
-	wnd := g.NewMasterWindow("Hello world", 250, 100, g.MasterWindowFlagsNotResizable)
+	wnd := g.NewMasterWindow("Notenrechner", 250, 100, g.MasterWindowFlagsNotResizable)
 	wnd.Run(loop)
 }
