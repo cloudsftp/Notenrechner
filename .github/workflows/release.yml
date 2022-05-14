@@ -3,7 +3,7 @@ on:
     tags:
       - 'v*'
     branches:
-      - 'feature/build'
+      - 'develop'
 
 jobs:
   release:
