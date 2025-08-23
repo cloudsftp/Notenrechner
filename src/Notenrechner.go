@@ -15,16 +15,16 @@ var (
 	gradeStr     string = "1"
 )
 
-func gradeFromPoints(points float32, maxPoints float32) float32 {
+func gradeFromPoints(points float64, maxPoints float64) float64 {
 	return 6 - 5*(points/maxPoints)
 }
 
-func roundGrade(grade float32) float32 {
-	var ratio float32 = 4
-	return float32(math.Round(float64(grade*ratio))) / ratio
+func roundGrade(grade float64) float64 {
+	var ratio float64 = 4
+	return float64(math.Round(float64(grade*ratio))) / ratio
 }
 
-func pointsFromText(text string) (float32, error) {
+func pointsFromText(text string) (float64, error) {
 	if text == "" {
 		return 0, nil
 	}
@@ -35,7 +35,7 @@ func pointsFromText(text string) (float32, error) {
 		return 0, err
 	}
 
-	return float32(points), nil
+	return float64(points), nil
 }
 
 func calculateGrade() {
@@ -63,7 +63,7 @@ func calculateGrade() {
 	gradeStr = fmt.Sprintf("%s (Genau: %5.3f)", gradeStr, preciseGrade)
 }
 
-func stringifyGrade(roundedGrade float32) (string, error) {
+func stringifyGrade(roundedGrade float64) (string, error) {
 	if roundedGrade < 1.0 || roundedGrade > 6.0 {
 		return "", fmt.Errorf("Außerhalb des gültigen Bereichs [0, %s]: %f", maxPointsStr, roundedGrade)
 	}
@@ -71,7 +71,7 @@ func stringifyGrade(roundedGrade float32) (string, error) {
 	integerGrade := math.Round(float64(roundedGrade))
 	gradeString := fmt.Sprintf("%d", int(integerGrade))
 
-	switch roundedGrade - float32(integerGrade) {
+	switch roundedGrade - integerGrade {
 	case 0.25:
 		gradeString = fmt.Sprintf("%d-", int(integerGrade))
 	case -0.25:
