@@ -38,36 +38,7 @@ func pointsFromText(text string) (float64, error) {
 	return float64(points), nil
 }
 
-func calculateGrade() {
-	points, err := pointsFromText(pointsStr)
-	if err != nil {
-		gradeStr = fmt.Sprintf("Ungültige Eingabe (%s)", err)
-		return
-	}
-
-	maxPoints, err := pointsFromText(maxPointsStr)
-	if err != nil {
-		gradeStr = fmt.Sprintf("Ungültige Eingabe (%s)", err)
-		return
-	}
-
-	preciseGrade := gradeFromPoints(points, maxPoints)
-	roundedGrade := roundGrade(preciseGrade)
-
-	gradeStr, err = stringifyGrade(roundedGrade)
-	if err != nil {
-		gradeStr = fmt.Sprintf("Ungültige Eingabe (%s)", err)
-		return
-	}
-
-	gradeStr = fmt.Sprintf("%s (Genau: %5.3f)", gradeStr, preciseGrade)
-}
-
-func stringifyGrade(roundedGrade float64) (string, error) {
-	if roundedGrade < 1.0 || roundedGrade > 6.0 {
-		return "", fmt.Errorf("Außerhalb des gültigen Bereichs [0, %s]: %f", maxPointsStr, roundedGrade)
-	}
-
+func stringifyGrade(roundedGrade float64) string {
 	integerGrade := math.Round(float64(roundedGrade))
 	gradeString := fmt.Sprintf("%d", int(integerGrade))
 
@@ -82,7 +53,32 @@ func stringifyGrade(roundedGrade float64) (string, error) {
 		gradeString = fmt.Sprintf("%d-%d", int(integerGrade-1.0), int(integerGrade))
 	}
 
-	return gradeString, nil
+	return gradeString
+}
+
+func calculateGrade() {
+	points, err := pointsFromText(pointsStr)
+	if err != nil {
+		gradeStr = fmt.Sprintf("Ungültige Eingabe (%s)", err)
+		return
+	}
+
+	maxPoints, err := pointsFromText(maxPointsStr)
+	if err != nil {
+		gradeStr = fmt.Sprintf("Ungültige Eingabe (%s)", err)
+		return
+	}
+
+	preciseGrade := gradeFromPoints(points, maxPoints)
+	if preciseGrade < 1.0 || preciseGrade > 6.0 {
+		gradeStr = fmt.Sprintf("Außerhalb des gültigen Bereichs [0, %s]: %f", maxPointsStr, preciseGrade)
+		return
+	}
+
+	roundedGrade := roundGrade(preciseGrade)
+	gradeStr = stringifyGrade(roundedGrade)
+
+	gradeStr = fmt.Sprintf("%s (Genau: %5.3f)", gradeStr, preciseGrade)
 }
 
 func loop() {
